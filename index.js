@@ -15,4 +15,4 @@ for (let token of envTokens) {
 }
 if (!envCorrect) {process.exit(1);}
 
-console.log("The app would now be running! (If anything were acutally done)");
+console.log("The app would now be running! (If anything were actually done)");
