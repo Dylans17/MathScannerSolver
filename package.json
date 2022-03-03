@@ -1,0 +1,28 @@
+{
+  "name": "mathscannersolver",
+  "version": "1.0.0",
+  "description": "Creates a webserver which hosts a site inputing math via MathPix API and provides methods to display and solve a small subset of math problems.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dylans17/MathScannerSolver.git"
+  },
+  "keywords": [
+    "Math",
+    "OCR",
+    "MathPix",
+    "Webserver"
+  ],
+  "author": "Team 8",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dylans17/MathScannerSolver/issues"
+  },
+  "homepage": "https://github.com/Dylans17/MathScannerSolver#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0"
+  }
+}
