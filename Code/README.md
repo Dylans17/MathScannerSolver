@@ -11,3 +11,7 @@ Creates a webserver which hosts a site inputting math via MathPix API and provid
 3. Run the application
 
         node index.js
+
+4. (Optional) If you want to keep your own repository, then you do not want to track the .env file in git.
+
+        git update-index --skip-worktree .env
