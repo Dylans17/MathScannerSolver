@@ -9,10 +9,11 @@ const DIM = 16
  output is a string of ~49 alphanumeric characters
 */
 module.exports = async function(input) { //accepts any sharp input
-  let pixels = await sharp(input).grayscale().resize(DIM, DIM).raw().toBuffer()
+  let pixelPromise = sharp(input).grayscale().resize(DIM, DIM).raw().toBuffer()
 
   let lastPixel = 255;
   let dHash = 0n;
+  let pixels = await pixelPromise;
   for (let pixel of pixels) {
     dHash <<= 1n;
     dHash |= lastPixel < pixel ? 1n : 0n;
