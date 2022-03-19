@@ -1,3 +1,4 @@
+"use strict";
 require('dotenv').config()
 
 //check to see if the user has configured their .env file
