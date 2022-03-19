@@ -24,6 +24,9 @@
   "homepage": "https://github.com/Dylans17/MathScannerSolver#readme",
   "dependencies": {
     "axios": "^0.26.1",
-    "dotenv": "^16.0.0"
+    "dotenv": "^16.0.0",
+    "dotenv": "^16.0.0",
+    "sharp": "^0.30.3"
+
   }
 }
