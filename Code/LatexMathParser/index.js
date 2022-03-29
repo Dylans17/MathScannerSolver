@@ -16,8 +16,3 @@ export default function parseMath(str) {
   const result = v.visit(tree);
   return result;
 }
-
-if (process.argv[2]) {
-  console.log(parseMath);
-  setInterval(() => {1}, 1 << 10);
-}
