@@ -1,4 +1,6 @@
-require('dotenv').config()
+"use strict";
+import dotenv from 'dotenv'
+dotenv.config()
 
 //check to see if the user has configured their .env file
 const envTokens = ["DESMOS_KEY", "MATHPIX_APP_ID", "MATHPIX_APP_KEY"];

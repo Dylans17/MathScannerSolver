@@ -1,5 +1,6 @@
 {
   "name": "mathscannersolver",
+  "type": "module",
   "version": "1.0.0",
   "description": "Creates a webserver which hosts a site inputing math via MathPix API and provides methods to display and solve a small subset of math problems.",
   "main": "index.js",
@@ -23,6 +24,11 @@
   },
   "homepage": "https://github.com/Dylans17/MathScannerSolver#readme",
   "dependencies": {
-    "dotenv": "^16.0.0"
+    "antlr4": "^4.9.3",
+    "axios": "^0.26.1",
+    "dotenv": "^16.0.0",
+    "form-data": "^4.0.0",
+    "node-localstorage": "^2.2.1",
+    "sharp": "^0.30.3"
   }
 }
