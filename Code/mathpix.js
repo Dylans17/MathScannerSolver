@@ -1,8 +1,10 @@
 "use strict";
-const axios = require("axios").default;
-const FormData = require("form-data");
-const fs = require("fs/promises");
-const imageHash = require("./image-hash.js");
+import axiosLib from "axios";
+import FormData from "form-data";
+import fs from "fs/promises";
+import imageHash from "./image-hash.js";
+
+let axios = axiosLib.default;
 
 const mathpixOptions = JSON.stringify({
   //see more options at https://docs.mathpix.com/#request-parameters
@@ -18,7 +20,7 @@ const mathpixOptions = JSON.stringify({
 });
 
 
-exports.makeRequest = async function(imageBuffer, imageName) {
+export default async function makeRequest(imageBuffer, imageName) {
   let form = new FormData()
   form.append("options_json", mathpixOptions);
   form.append("file", imageBuffer, imageName);

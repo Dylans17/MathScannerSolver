@@ -21,5 +21,3 @@ if (process.argv[2]) {
   console.log(parseMath);
   setInterval(() => {1}, 1 << 10);
 }
-
-export Node

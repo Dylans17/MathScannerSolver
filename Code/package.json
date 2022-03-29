@@ -1,5 +1,6 @@
 {
   "name": "mathscannersolver",
+  "type": "module",
   "version": "1.0.0",
   "description": "Creates a webserver which hosts a site inputing math via MathPix API and provides methods to display and solve a small subset of math problems.",
   "main": "index.js",
