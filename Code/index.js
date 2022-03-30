@@ -1,6 +1,13 @@
 "use strict";
 import dotenv from 'dotenv'
-dotenv.config()
+import express from 'express';
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
+
+const app = express();
+dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 //check to see if the user has configured their .env file
 const envTokens = ["DESMOS_KEY", "MATHPIX_APP_ID", "MATHPIX_APP_KEY"];
@@ -17,4 +24,11 @@ for (let token of envTokens) {
 }
 if (!envCorrect) {process.exit(1);}
 
-console.log("The app would now be running! (If anything were actually done)");
+app.use(express.static(__dirname + "/build"));
+
+app.get('/*', function (req, res) {
+  res.sendFile(__dirname + "/build/index.html");
+});
+
+app.listen(8080);
+console.log("App listening on port 8080.");
