@@ -41,5 +41,5 @@ export default async function makeRequest(imageBuffer, imageName) {
   let response = await axios.post("https://api.mathpix.com/v3/text",
      form, {headers: {...form.getHeaders(), app_id: process.env.MATHPIX_APP_ID, app_key: process.env.MATHPIX_APP_KEY} });
   imageStorage.setItem(hash, JSON.stringify(response.data));
-  return response;
+  return response.data;
 }
