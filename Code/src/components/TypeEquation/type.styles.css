@@ -1,0 +1,50 @@
+.type-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+.editor {
+    height: 30%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+}
+
+.first-block-type-equation{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.type-title{
+    text-align: center;
+}
+
+
+.submit-type-equation{
+    width: 150px;
+    padding: 5px 10px;
+}
+
+.examples-type-section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.title-examples{
+    font-weight: 600;
+}
+
+.examples-equations{
+    margin-top: 10px;
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.575);
+    border-radius: 3px;
+}

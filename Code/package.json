@@ -1,34 +1,42 @@
 {
-  "name": "mathscannersolver",
-  "type": "module",
-  "version": "1.0.0",
-  "description": "Creates a webserver which hosts a site inputing math via MathPix API and provides methods to display and solve a small subset of math problems.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Dylans17/MathScannerSolver.git"
-  },
-  "keywords": [
-    "Math",
-    "OCR",
-    "MathPix",
-    "Webserver"
-  ],
-  "author": "Team 8",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Dylans17/MathScannerSolver/issues"
-  },
-  "homepage": "https://github.com/Dylans17/MathScannerSolver#readme",
+  "name": "equations-app",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "antlr4": "^4.9.3",
-    "axios": "^0.26.1",
-    "dotenv": "^16.0.0",
-    "form-data": "^4.0.0",
-    "node-localstorage": "^2.2.1",
-    "sharp": "^0.30.3"
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.4",
+    "@testing-library/user-event": "^13.5.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-dropzone": "^12.0.4",
+    "react-mathquill": "^1.0.2",
+    "react-router-dom": "^6.2.2",
+    "react-scripts": "5.0.0",
+    "react-webcam": "^7.0.0",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
