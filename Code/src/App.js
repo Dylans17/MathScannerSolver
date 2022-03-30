@@ -1,15 +1,15 @@
 import "./App.css";
 import React, { useState } from "react";
-import HomePage from "./components/HomePage/home-page.component";
+import HomePage from "./components/HomePage/home-page.component.jsx";
 import { Route, Routes, BrowserRouter as Router, Link } from "react-router-dom";
 import HamburguerMenu from "./images/hamburguer-menu-icon.svg";
-import UploadPicture from "./components/UploadPicture/drop-zone.component";
-import Result from "./components/Result/result.component";
-import Camera from "./components/Camera/camera.component";
-import TypeEquation from "./components/TypeEquation/type.component";
-import Cards from "./components/Cards/cards.component";
+import UploadPicture from "./components/UploadPicture/drop-zone.component.jsx";
+import Result from "./components/Result/result.component.jsx";
+import Camera from "./components/Camera/camera.component.jsx";
+import TypeEquation from "./components/TypeEquation/type.component.jsx";
+import Cards from "./components/Cards/cards.component.jsx";
 import CloseIcon from "./images/close-x.svg";
-import PictureTaken from "./components/Camera/PictureTaken/picture_taken.component";
+import PictureTaken from "./components/Camera/PictureTaken/picture_taken.component.jsx";
 
 function App() {
   const [sidebar, setSidebar] = useState(false);
@@ -19,7 +19,7 @@ function App() {
     e.preventDefault();
     setSidebar(!sidebar);
   }
-  
+
   return (
     <div className="App">
       <Router>
