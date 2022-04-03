@@ -1,0 +1,22 @@
+.camera-section{
+    position: relative;
+}
+.camera__button{
+    position: absolute;
+    bottom: 5%;
+    right: calc(50% - 15px);
+    border-radius: 50%;
+    border: 0;
+    width: 30px;
+    height: 30px;
+}
+
+.camera__button:hover{
+    background-color: #c7c7c7;
+    border: 1px solid rgb(82, 82, 82);
+}
+
+.camera__button:active{
+    background-color: #555555;
+    border: 1px solid rgb(82, 82, 82);
+}

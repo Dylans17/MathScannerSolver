@@ -16,8 +16,9 @@ export const defaultOptions = {
   knownCommands: {
     "\\sqrt": "sqrt",
     "\\frac": "/",
-    "\\sum": true,
-    "\\prod": true,
+    //these are actually functions
+    // "\\sum": true,
+    // "\\prod": true,
   },
   //when true, other tex identifiers will cause errors
   //when false, other tex identifiers will be acceoted anyways

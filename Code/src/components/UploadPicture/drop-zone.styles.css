@@ -1,0 +1,15 @@
+
+.box-input-image{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 3px dashed #5d5d5d;
+    padding: 2rem 1rem;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+.box-input-image p {
+    color: #5d5d5d;
+}

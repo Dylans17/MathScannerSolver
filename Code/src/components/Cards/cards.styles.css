@@ -1,0 +1,14 @@
+.card-wrapper{
+    border: 1px solid rgb(73, 73, 73);
+    border-radius: 3px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    display: flex;
+    gap: 10px;    
+}
+
+.card-wrapper:hover{
+    border: 1px solid #0c4388;
+    background-color: rgba(255, 255, 255, 0.226);
+}

@@ -1,0 +1,39 @@
+.result-box{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.result-box h2 {
+    margin: 0;
+    margin-bottom: 1rem;
+}
+
+.equation-container, .result-container{
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+#equation-text{
+    font-size: 1.25rem;
+}
+
+#result-text{
+    font-size: 1.1rem;
+}
+
+.button-steps, .button{
+    width: 100%;
+    padding: 5px;
+    border-radius: 3px;
+    border: 0;
+    background-color: #7593c3;
+    color: #f8f8f8;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.button-steps:hover{
+    background-color: #88a2cc;
+}
