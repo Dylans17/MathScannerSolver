@@ -55,3 +55,19 @@ export default async function makeRequest(imageBuffer, imageName, verboseLogging
   imageStorage.setItem(hash, JSON.stringify(response.data));
   return response.data;
 }
+
+export async function getAllEquations(mathpixRepsonse) {
+  /**
+  * This function returns a list (js array) of equations from a given mathpix response.
+  *
+  */
+  let resultList = [];
+  let data = mathpixRepsonse.data;
+  let dataLen = mathpixRepsonse.data.length;
+  for (let dataObj of mathpixRepsonse.data) {
+    if (dataObj.type != "latex") { //need to find tsv example to see if we can include that
+      resultList.push(dataObj.value);
+    }
+  }
+  return resultList;
+}
