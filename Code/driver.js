@@ -1,7 +1,7 @@
 import fs from "fs/promises";
 import parseMath from "./LatexMathParser/index.js"
 import dotenv from "dotenv"
-import mathpix from "./mathpix.js";
+import mathpix, {makeRequest} from "./mathpix.js";
 import imageHash from "./image-hash.js";
 import readline from "readline";
 import {approxEvaluate} from "./solver.js";
@@ -24,10 +24,25 @@ const driverFunctions = {
     let result = approxEvaluate(node);
     console.log(result);
   },
-  "mathpix-image": async function (line) {
+  "mathpix-plain-result": async function (line) {
+    let img = await fs.readFile(line);
+    let result = await makeRequest(img, line);
+    console.log(result);
+  },
+  "mathpix-extract-equations": async function (line) {
     let img = await fs.readFile(line);
     let result = await mathpix(img, line);
     console.log(result);
+  },
+  "solve-image": async function (line) {
+    let img = await fs.readFile(line);
+    let equationList = await mathpix(img, line);
+    for (let equation of equationList) {
+      console.log(equation);
+      let node = parseMath(equation);
+      let result = approxEvaluate(node);
+      console.log(result);
+    }
   },
   "image-hash": async function (line) {
     let img = await fs.readFile(line);

@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 import express from 'express';
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
-import parseMath from "./LatexMathParser/index.js"
+import mathpix from "./LatexMathParser/index.js"
 import {approxEvaluate} from "./solver.js";
 
 const app = express();
