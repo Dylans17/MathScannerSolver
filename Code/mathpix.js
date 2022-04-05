@@ -125,7 +125,21 @@ function stripEquations(text) {
     return result;
   }
   else if (text.includes("\\begin{aligned}") && text.includes("\\end{aligned}")) {
-    // TODO:
+    let arr = text.split(/\\(?:begin|end){aligned}/);
+    if (arr.length != 3) {
+      throw "Unsuported nested aligned sections";
+    }
+    let inner = arr[1];
+    if(inner.includes("\\begin{array}")) {
+      throw "Nesting of array and aligned not supported";
+    }
+    let result = [];
+    for (let expr of inner.split("\\\\")) {
+      // since "Unsupported multiple columns in aligned" we can assume no "&"
+      arr[1] = expr.replaceAll("&","").trim();
+      result.push(arr.join(""));
+    }
+    return result;
   }
   return [text];
 }
