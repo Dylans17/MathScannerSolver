@@ -26,7 +26,7 @@ const driverFunctions = {
   },
   "mathpix-plain-result": async function (line) {
     let img = await fs.readFile(line);
-    let result = await makeRequest(img, line);
+    let result = await makeRequest(img);
     console.log(result);
   },
   "mathpix-extract-equations": async function (line) {
@@ -77,7 +77,12 @@ function handleInput(line) {
     if (driverId == -1 || driverId >= driverTypes.length) {handleInput("")}
   }
   else if (driverId < driverTypes.length && driverId != -1) {
-    driverFunctions[driverTypes[driverId]](line);
+    try {
+      driverFunctions[driverTypes[driverId]](line);
+    }
+    catch (e) {
+      console.log(`Error: ${e}`);
+    }
   }
   else {
     console.log("tip: You can change after selecting one by using \"switch #\"");
