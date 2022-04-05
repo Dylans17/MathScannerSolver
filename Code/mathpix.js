@@ -54,7 +54,12 @@ export async function makeRequest(imageBuffer, imageName, verboseLogging=true) {
   if (verboseLogging)
     console.log("Fetching result for new image from mathpix: " + hash);
   let response = await axios.post("https://api.mathpix.com/v3/text",
-     form, {headers: {...form.getHeaders(), app_id: process.env.MATHPIX_APP_ID, app_key: process.env.MATHPIX_APP_KEY} });
+     form, {
+       // Increased max size from 10 MB to 2 GB
+       maxContentLength: 2**31,
+       maxBodyLength: 2**31,
+       headers: {...form.getHeaders(), app_id: process.env.MATHPIX_APP_ID, app_key: process.env.MATHPIX_APP_KEY}
+     });
   imageStorage.setItem(hash, JSON.stringify(response.data));
   return response.data;
 }
