@@ -36,7 +36,7 @@ const driverFunctions = {
   },
   "solve-image": async function (line) {
     let img = await fs.readFile(line);
-    let equationList = await mathpix(img, line);
+    let equationList = await mathpix(img);
     for (let equation of equationList) {
       console.log(equation);
       let node = parseMath(equation);
@@ -67,7 +67,7 @@ if (driverId == -1) {
 rl.on("line", handleInput);
 
 //this code for ui isn't good but it doesn't need to be
-function handleInput(line) {
+async function handleInput(line) {
   if (line.startsWith("switch") || isSelecting) {
     isSelecting = false;
     line = line.replace("switch", "").trim();
@@ -78,7 +78,7 @@ function handleInput(line) {
   }
   else if (driverId < driverTypes.length && driverId != -1) {
     try {
-      driverFunctions[driverTypes[driverId]](line);
+      await driverFunctions[driverTypes[driverId]](line);
     }
     catch (e) {
       console.log(`Error: ${e}`);

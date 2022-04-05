@@ -69,6 +69,9 @@ export async function getAllEquations(mathpixRepsonse) {
   * This function returns a list (js array) of equations from a given mathpix response.
   *
   */
+  if (mathpixRepsonse.error) {
+    throw mathpixRepsonse.error;
+  }
   let resultList = [];
   let data = mathpixRepsonse.data;
   let dataLen = mathpixRepsonse.data.length;
