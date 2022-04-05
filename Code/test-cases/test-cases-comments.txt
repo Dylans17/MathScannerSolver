@@ -1,0 +1,8 @@
+2.png		can solve
+t.png		can solve
+4.png		want to be able to solve
+4-brace.png	identical to 4.png and we are able to separate equations
+abs.png		do not want to be able to handle test cases, error is thrown
+no-content.png	error is thrown and will be caught
+3.png		want to be able to solve this type in the future but not this image (poorly formatted math/too much text)
+^		we are able to seperate equations
