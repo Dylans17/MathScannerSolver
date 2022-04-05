@@ -79,9 +79,55 @@ export async function getAllEquations(mathpixRepsonse) {
     if (dataObj.type != "latex") { //need to find tsv example to see if we can include that
       continue;
     }
-    resultList.push(dataObj.value);
+    for (let value of stripEquations(dataObj.value)) {
+      resultList.push(value);
+    }
   }
   return resultList;
+}
+
+function stripEquations(text) {
+  if (text.includes("\\left\\{")) {
+    if (!text.endsWith("\\right\\}") && !text.endsWith("\\right")) {
+      throw "Equation contains left { but does not end with }." +
+            "Use parenthesis for math operations";
+    }
+    let arr = text.split("\\left\\{");
+    if (arr.length != 2) {
+      throw "Unsuported nested {";
+    }
+    arr[1] = arr[arr.length-1].replace(/\\right(\\})?$/, "");
+    text = arr.join("");
+  }
+  if (text.includes("\\begin{array}") && text.includes("\\end{array}")) {
+    let arr = text.split(/\\(?:begin|end){array}/);
+    if (arr.length != 3) {
+      throw "Unsuported nested arrays";
+    }
+    let inner = arr[1];
+    if(inner.includes("\\begin{aligned}")) {
+      throw "Nesting of array and aligned not supported";
+    }
+    let regExMatch = inner.match(/{([lrc|]+)}(.*)$/);
+    let numColumns = regExMatch[1].length;
+    if (numColumns > 1) {
+      //note this must be changed if you ever want to support matrices
+      //if this is changed, the for loop below must also change
+      throw "Unsupported multiple columns in array";
+    }
+    inner = regExMatch[2]; //The rest of the text
+    let result = [];
+    for (let expr of inner.split("\\\\")) {
+      // since "Unsupported multiple columns in array" we can assume no "&"
+      arr[1] = expr.trim();
+      result.push(arr.join(""));
+    }
+    return result;
+  }
+  else if (text.includes("\\begin{aligned}") && text.includes("\\end{aligned}")) {
+    // TODO:
+  }
+  return [text];
 }
 
 export default async function requestAllEquations(imageBuffer, imageName, verboseLogging=true) {
