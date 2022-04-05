@@ -23,20 +23,32 @@ const mathpixOptions = JSON.stringify({
 });
 
 
-export default async function makeRequest(imageBuffer, imageName) {
+export default async function makeRequest(imageBuffer, imageName, verboseLogging=true) {
+  /**
+  * This function primarily focuses on sending the request and storing the result
+  * I do not think that we should need to use this directly but it should always be used indirectly
+  * param: imageBuffer - A file buffer (or equivalent) that contains the actual image file
+  * param: imageName - optional argument to indicate the name of the file to mathpix.
+  *                    This doesn't seem useful so it can be excluded (undefined)
+  * param: verboseLogging - optional argument that determines if the info about whether mathpix
+  *                         is called or not is logged to the console. Currently, it defaults to true
+                            however, this behavior is likely to change in future releases.
+  * result: the data object returned from mathpix.
+  */
+  let hash = await imageHash(imageBuffer);
+  if (imageName == undefined)
   let form = new FormData();
   form.append("options_json", mathpixOptions);
   form.append("file", imageBuffer, imageName);
 
-  let hash = await imageHash(imageBuffer);
   let storedResult = imageStorage.getItem(hash);
   if (storedResult != null) {
-    if (1 /*put condition for verbose logging?*/)
+    if (verboseLogging)
       console.log("Using stored result for new image: " + hash);
     return JSON.parse(storedResult);
   }
 
-  if (1 /*put condition for verbose logging?*/)
+  if (verboseLogging)
     console.log("Fetching result for new image from mathpix: " + hash);
   let response = await axios.post("https://api.mathpix.com/v3/text",
      form, {headers: {...form.getHeaders(), app_id: process.env.MATHPIX_APP_ID, app_key: process.env.MATHPIX_APP_KEY} });
