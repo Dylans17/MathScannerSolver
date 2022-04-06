@@ -108,6 +108,24 @@ const approxEvaluateFunctions = {
     "sec" : function(node, symTab) {
       return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, (v)=>1/Math.cos(v));
     },
+	"arcsin" : function(node, symTab) {
+      return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, Math.asin);
+    },
+    "arccos" : function(node, symTab) {
+      return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, Math.acos);
+    },
+    "arctan" : function(node, symTab) {
+      return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, Math.atan);
+    },
+    "arccsc" : function(node, symTab) {
+      return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, (v)=>1/Math.sin(v));
+    },
+    "arccot" : function(node, symTab) {
+      return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, (v)=>1/Math.tan(v));
+    },
+    "arcsec" : function(node, symTab) {
+      return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, (v)=>1/Math.cos(v));
+    },
     "product" : function(node, symTab) {
       throw "Product Not Implemented"
     },

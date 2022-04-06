@@ -44,7 +44,13 @@ const alwaysFunctions = {
   "\\sec": "sec",
   "\\prod": "product",
   "\\sum": "sum",
-  "\\int": "integral"
+  "\\int": "integral",
+  "\\arcsin": "arcsin",
+  "\\arctan": "arctan",
+  "\\arccos": "arccos",
+  "\\arcsec": "arcsec",
+  "\\arccsc": "arccsc",
+  "\\arccot": "arccot"
 };
 
 export default class AstBuilderVisitor extends LatexMathVisitor {
