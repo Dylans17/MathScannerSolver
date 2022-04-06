@@ -1,18 +1,45 @@
-"use strict";
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 import express from 'express';
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
-import mathpix from "./LatexMathParser/index.js"
 import {approxEvaluate} from "./solver.js";
+import cors from 'cors';
+import parseMath from "./LatexMathParser/index.js"
+import mathpix from './mathpix.js';
 
 const app = express();
 dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+
+
+// TODO: I'm probably going to at least change the location of these, if not the implementation
+function getBase64(file, cb) {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function() {
+        cb(reader.result);
+    }
+    reader.onerror = function(error){
+        console.log("error:", error)
+    }
+}
+
+function fileUpload(file){
+    try {
+        getBase64(file, (base64string) => {
+            console.log(base64string)
+        })
+    } catch(e) {
+        console.log(e.message)
+    }
+}
+
+
 //check to see if the user has configured their .env file
-const envTokens = ["DESMOS_KEY", "MATHPIX_APP_ID", "MATHPIX_APP_KEY"];
+//TODO: change to warning only
+const envTokens = ["MATHPIX_APP_ID", "MATHPIX_APP_KEY"];
 let envCorrect = true;
 for (let token of envTokens) {
   if (!(token in process.env)) {
@@ -52,5 +79,50 @@ app.get("/*", (req, res) => {
   res.sendFile(__dirname + "/build/index.html");
 });
 
-app.listen(8080);
-console.log("App listening on port 8080.");
+app.use(express.json());
+
+app.use(cors());
+
+app.post("/equation", (req,res, next) => {
+    let newData;
+    try {
+        let node = parseMath(req.body.equation);
+        let result = approxEvaluate(node);
+        newData =  {
+            equation: req.body.equation,
+            result: result
+        }
+        res.json(newData);
+    } catch (e) {
+        console.log("oops");
+        let err = new Error(e);
+        err.statusCode = 500;
+        next(err);
+    }
+
+})
+
+app.use(function(err, req, res, next) {
+    console.error(err.message);
+    if (!err.statusCode) err.statusCode = 500; // If err has no specified error code, set error code to 'Internal Server Error (500)'
+    res.status(err.statusCode).json(err.message);
+ });
+
+// app.post('/input-picture', (req,res) => {
+
+//     let imageBuffer = fileUpload(req.body.picture);
+//     let equationFromMathPix = makeRequest(imageBuffer, "whatever")
+//     let node = parseMath(equationFromMathPix);
+//     let result = approxEvaluate(node);
+
+//     const newData = {
+//         equation: equationFromMathPix,
+//         result: result
+//     }
+
+//     console.log(equationFromMathPix);
+//     res.json(newData)
+// })
+
+app.listen(9000);
+console.log("App listening on port 9000.");
