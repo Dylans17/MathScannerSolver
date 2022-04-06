@@ -1,3 +1,4 @@
+"use strict";
 import antlr4 from "antlr4";
 import LatexMathVisitor from "./antlr/LatexMathVisitor.js"
 import LatexMathParser from "./antlr/LatexMathParser.js"

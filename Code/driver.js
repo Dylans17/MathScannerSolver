@@ -1,3 +1,4 @@
+"use strict";
 import fs from "fs/promises";
 import parseMath from "./LatexMathParser/index.js"
 import dotenv from "dotenv"
