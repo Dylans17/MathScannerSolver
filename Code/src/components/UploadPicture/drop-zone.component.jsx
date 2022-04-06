@@ -4,13 +4,24 @@ import Dropzone from "react-dropzone";
 import cloud from '../../images/cloud.svg';
 import uploaded from '../../images/uploaded.svg';
 import { useNavigate  } from "react-router-dom";
+import axios from 'axios';
 
 function UploadPicture() {
   let navigate = useNavigate();
+  let result = 0;
+  let equation = 0;
   
   async function onAcceptedDrop(acceptedFile) {
     console.log(acceptedFile[0]);
-    navigate('/result');
+    axios
+      .post("/input-picture", { picture: acceptedFile[0] })
+      .then((response) => {
+        console.log(response);
+        result= response.data.result;
+        equation= response.data.equation;     
+        navigate("/result", {state: {result: result, equation: equation}}) 
+      })
+      .catch(console.log("error posting"));
   }
   return (
     <div className="dropzone-section">

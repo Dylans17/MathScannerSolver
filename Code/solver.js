@@ -1,6 +1,3 @@
-
-
-
 const approxEvaluateFunctions = {
   operatorFunctions: {
     "=" : function(node, symTab) {

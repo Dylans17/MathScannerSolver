@@ -26,6 +26,10 @@
     text-align: center;
 }
 
+.error__message{
+    color: red;
+    font-size: 12px;
+}
 
 .submit-type-equation{
     width: 150px;

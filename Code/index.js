@@ -1,28 +1,54 @@
-"use strict";
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 import express from 'express';
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
+import cors from 'cors';
+import parseMath from "./LatexMathParser/index.js"
+import {approxEvaluate} from "./solver.js";
+import makeRequest from './mathpix.js';
 
 const app = express();
-dotenv.config();
+//dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-//check to see if the user has configured their .env file
-const envTokens = ["DESMOS_KEY", "MATHPIX_APP_ID", "MATHPIX_APP_KEY"];
-let envCorrect = true;
-for (let token of envTokens) {
-  if (!(token in process.env)) {
-    console.error(`Token ${token} missing from .env`);
-    envCorrect = false;
-  }
-  else if (process.env[token].includes("INSERT")) {
-    console.error(`Token ${token} not yet defined in .env`);
-    envCorrect = false;
-  }
+
+function getBase64(file, cb) {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function() {
+        cb(reader.result);
+    }
+    reader.onerror = function(error){
+        console.log("error:", error)
+    }
 }
-if (!envCorrect) {process.exit(1);}
+
+function fileUpload(file){
+    try {
+        getBase64(file, (base64string) => {
+            console.log(base64string)
+        })
+    } catch(e) {
+        console.log(e.message)
+    }
+}
+
+
+// //check to see if the user has configured their .env file
+// const envTokens = ["MATHPIX_APP_ID", "MATHPIX_APP_KEY"];
+// let envCorrect = true;
+// for (let token of envTokens) {
+//   if (!(token in process.env)) {
+//     console.error(`Token ${token} missing from .env`);
+//     envCorrect = false;
+//   }
+//   else if (process.env[token].includes("INSERT")) {
+//     console.error(`Token ${token} not yet defined in .env`);
+//     envCorrect = false;
+//   }
+// }
+// if (!envCorrect) {process.exit(1);}
 
 app.use(express.static(__dirname + "/build"));
 
@@ -30,5 +56,50 @@ app.get('/*', function (req, res) {
   res.sendFile(__dirname + "/build/index.html");
 });
 
-app.listen(8080);
-console.log("App listening on port 8080.");
+app.use(express.json());
+
+app.use(cors());
+
+app.post("/equation", (req,res, next) => {
+    let newData;
+    try {
+        let node = parseMath(req.body.equation);
+        let result = approxEvaluate(node);
+        newData =  {
+            equation: req.body.equation,
+            result: result
+        }
+        res.json(newData);
+    } catch (e) {
+        console.log("oops");
+        let err = new Error(e);
+        err.statusCode = 500;
+        next(err);
+    }    
+    
+})
+
+app.use(function(err, req, res, next) {
+    console.error(err.message);
+    if (!err.statusCode) err.statusCode = 500; // If err has no specified error code, set error code to 'Internal Server Error (500)'
+    res.status(err.statusCode).json(err.message);
+ });
+
+// app.post('/input-picture', (req,res) => {    
+   
+//     let imageBuffer = fileUpload(req.body.picture);
+//     let equationFromMathPix = makeRequest(imageBuffer, "whatever")
+//     let node = parseMath(equationFromMathPix);        
+//     let result = approxEvaluate(node);
+    
+//     const newData = {
+//         equation: equationFromMathPix,
+//         result: result
+//     }
+
+//     console.log(equationFromMathPix);
+//     res.json(newData)
+// })
+
+app.listen(9000);
+console.log("App listening on port 9000.");
