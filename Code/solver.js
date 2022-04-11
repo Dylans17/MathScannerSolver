@@ -91,21 +91,51 @@ const approxEvaluateFunctions = {
       return innerValue;
     },
     "sin" : function(node, symTab) {
+      let power;
+      if (node.sup && (power = approxEvaluate(node.sup, symTab)) == -1) {
+        node.sup = undefined;
+        return approxEvaluateFunctions.functionMethods["arcsin"](node, symTab);
+      }
       return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, Math.sin);
     },
     "cos" : function(node, symTab) {
+      let power;
+      if (node.sup && (power = approxEvaluate(node.sup, symTab)) == -1) {
+        node.sup = undefined;
+        return approxEvaluateFunctions.functionMethods["arccos"](node, symTab);
+      }
       return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, Math.cos);
     },
     "tan" : function(node, symTab) {
+      let power;
+      if (node.sup && (power = approxEvaluate(node.sup, symTab)) == -1) {
+        node.sup = undefined;
+        return approxEvaluateFunctions.functionMethods["arctan"](node, symTab);
+      }
       return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, Math.tan);
     },
     "cosec" : function(node, symTab) {
+      let power;
+      if (node.sup && (power = approxEvaluate(node.sup, symTab)) == -1) {
+        node.sup = undefined;
+        return approxEvaluateFunctions.functionMethods["arccsc"](node, symTab);
+      }
       return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, (v)=>1/Math.sin(v));
     },
     "cotan" : function(node, symTab) {
+      let power;
+      if (node.sup && (power = approxEvaluate(node.sup, symTab)) == -1) {
+        node.sup = undefined;
+        return approxEvaluateFunctions.functionMethods["arccot"](node, symTab);
+      }
       return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, (v)=>1/Math.tan(v));
     },
     "sec" : function(node, symTab) {
+      let power;
+      if (node.sup && (power = approxEvaluate(node.sup, symTab)) == -1) {
+        node.sup = undefined;
+        return approxEvaluateFunctions.functionMethods["arcsec"](node, symTab);
+      }
       return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, (v)=>1/Math.cos(v));
     },
 	  "arcsin" : function(node, symTab) {
