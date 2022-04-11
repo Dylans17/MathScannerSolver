@@ -50,7 +50,10 @@ const alwaysFunctions = {
   "\\arccos": "arccos",
   "\\arcsec": "arcsec",
   "\\arccsc": "arccsc",
-  "\\arccot": "arccot"
+  "\\arccot": "arccot",
+  "\\operatorname{arcsec}": "arcsec",
+  "\\operatorname{arccot}": "arccot",
+  "\\operatorname{arccsc}": "arccsc"
 };
 
 export default class AstBuilderVisitor extends LatexMathVisitor {
