@@ -10,7 +10,6 @@ import TypeEquation from "./components/TypeEquation/type.component.jsx";
 import Cards from "./components/Cards/cards.component.jsx";
 import CloseIcon from "./images/close-x.svg";
 import PictureTaken from "./components/Camera/PictureTaken/picture_taken.component.jsx";
-import NewUploadPicture from "./components/UploadPicture/new.dropzone.component.jsx";
 
 
 function App() {
@@ -55,7 +54,6 @@ function App() {
               <Route exact path="/" element={<Cards />} />
               <Route path="/upload" element={<UploadPicture />} />
               <Route path="/result" element={<Result />} />
-              <Route path="/upload-new" element={<NewUploadPicture/>}/>
               <Route path="/camera" element={<Camera setCapturedImg={setCapturedImg}/>} />
               <Route path="/type" element={<TypeEquation />} />
               <Route path="/picture-taken" element={<PictureTaken capturedImg={capturedImg}/>}/>

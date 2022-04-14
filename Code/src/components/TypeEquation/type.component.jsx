@@ -5,10 +5,8 @@ import { addStyles, EditableMathField } from "react-mathquill";
 import axios from "axios";
 addStyles();
 
-function TypeEquation(props) {
+function TypeEquation() {
   let navigate = useNavigate();
-  //const [latex, setLatex] = useState("");
-  let result = 0;
   const [errorMessage, setErrorMessage] = useState("");
   const initialEquation = [
     {
@@ -77,17 +75,6 @@ function TypeEquation(props) {
             </div>
           );
         })}
-        {/*<EditableMathField
-          className="editor"
-          style={{
-            padding: "10px 25px",
-            borderRadius: "5px",
-          }}
-          latex={latex}
-          onChange={(mathField) => {
-            setLatex(mathField.latex());
-          }}
-        />*/}
         <p className="error__message">{errorMessage}</p>
         <div className="buttons__type__wrapper">
           <button className="add-another-equation button"onClick={handleAddInput}>Add Another Equation</button>
