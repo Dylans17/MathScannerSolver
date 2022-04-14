@@ -20,7 +20,8 @@ function TypeEquation() {
     axios
       .post("/equations", { equations: equations })
       .then((response) => {
-        navigate("/result", { state: { equations: response.data } });
+        console.log("Response: ",  response.data)
+        navigate("/result", { state: { data: response.data } });
       })
       .catch((e) => {
         setErrorMessage(e.response.data);

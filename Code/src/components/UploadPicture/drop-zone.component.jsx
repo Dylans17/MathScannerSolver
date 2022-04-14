@@ -8,6 +8,7 @@ import axios from "axios";
 import FormData from "form-data";
 
 function UploadPicture() {
+  let navigate = useNavigate();
  
   function onDrop (acceptedFiles){
     console.log(acceptedFiles);
@@ -18,7 +19,8 @@ function UploadPicture() {
     axios
     .post('/input-picture', formData)
     .then((response) => {
-      console.log("Response inside fileupload: ", JSON.stringify(response.data))
+      console.log("Response inside fileupload: ", response.data)
+      navigate("/result", {state: {data: response.data}})
     })
     .catch((e) => {
       console.log(e.response.data);

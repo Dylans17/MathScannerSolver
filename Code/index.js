@@ -38,12 +38,13 @@ app.use(cors());
 
 app.post("/equations", (req, res, next) => {
   const data = req.body.equations;
-  let dataRes = [];
+  let dataRes = {equations: [], results: []};
   try {
     for (let i = 0; i < data.length; i++) {
       let node = parseMath(data[i]);
       let result = approxEvaluate(node);
-      dataRes.push({ equation: data[i], result: result });
+      dataRes.equations.push(data[i]);
+      dataRes.results.push(result)
     }
     res.send(dataRes);
   } catch (e) {

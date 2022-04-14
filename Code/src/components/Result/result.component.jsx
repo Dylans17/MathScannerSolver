@@ -9,11 +9,21 @@ addStyles();
 function Result() {
   let location = useLocation();
 
-  const resultArray = location.state.equations;
+  const resultEquations = location.state.data.equations;
+  const resultResults = location.state.data.results;
+  
+
+  function createResultsArray()  {    
+    const resultArray = [];
+    for(let i=0; i<resultEquations.length; i++) {
+      resultArray.push({equation: resultEquations[i], result: resultResults[i]});
+    }
+    return resultArray;
+  }
 
   return (
     <section className="result-box">
-      {resultArray.map((data, i) => {
+      {createResultsArray().map((data, i) => {
         return (
           <div className="result__wrapper" key={i}>
               <StaticMathField id="equation-text">
