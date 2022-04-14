@@ -5,14 +5,15 @@
 }
 
 .result-box h2 {
-    margin: 0;
-    margin-bottom: 1rem;
+    margin: 0 0 0.2rem;
+    font-size: 1rem;
+    margin-top: 0.7rem;
 }
 
-.equation-container, .result-container{
-    background-color: #f8f8f8;
+.result__wrapper{
     border-radius: 3px;
-    padding: 10px;
+    background-color: #fff;
+    padding: 0.5rem 1rem;
 }
 
 #equation-text{
