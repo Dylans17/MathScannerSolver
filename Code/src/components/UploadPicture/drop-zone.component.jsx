@@ -1,32 +1,41 @@
 import React, { useState, useCallback } from "react";
 import "./drop-zone.styles.css";
-import Dropzone, {useDropzone} from "react-dropzone";
+import Dropzone, { useDropzone } from "react-dropzone";
 import cloud from "../../images/cloud.svg";
 import uploaded from "../../images/uploaded.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import FormData from "form-data";
+import Loading from "../Loading/loading.component.jsx";
 
 function UploadPicture() {
   let navigate = useNavigate();
- 
-  function onDrop (acceptedFiles){
-    console.log(acceptedFiles);
+  const [loading, setLoading] = useState(false);
+
+  function onDrop(acceptedFiles) {
+    setLoading(true);
+    console.log("Accepted files: ", acceptedFiles);
     const formData = new FormData();
-    const [file] = [...acceptedFiles];
-    console.log("File:" , file)
-    formData.append("file", file);
+    const files = acceptedFiles;
+    files.forEach((file, i) => {
+      formData.append(i, file);
+    });
+    //const [file] = [...acceptedFiles];
+    console.log("File:", files);
+    console.log("form data: ", formData);
     axios
-    .post('/input-picture', formData)
-    .then((response) => {
-      console.log("Response inside fileupload: ", response.data)
-      navigate("/result", {state: {data: response.data}})
-    })
-    .catch((e) => {
-      console.log(e.response.data);
-    })           
+      .post("/input-picture", formData)
+      .then((response) => {
+        console.log("Response inside fileupload: ", response.data);
+        setLoading(false);
+        navigate("/result", { state: { data: response.data } });
+      })
+      .catch((e) => {
+        setLoading(false);
+        console.log(e.response.data);
+      });
   }
-  
+
   return (
     <div className="dropzone-section">
       <Dropzone
@@ -52,6 +61,7 @@ function UploadPicture() {
           </section>
         )}
       </Dropzone>
+      {loading ? <Loading /> : ""}
     </div>
   );
 }

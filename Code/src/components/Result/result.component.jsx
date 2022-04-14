@@ -34,10 +34,6 @@ function Result() {
           </div>
         );
       })}
-
-      <div className="steps-container">
-        <button className="button-steps">Steps</button>
-      </div>
     </section>
   );
 }
