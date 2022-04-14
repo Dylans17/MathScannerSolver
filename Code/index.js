@@ -41,18 +41,18 @@ function fileUpload(file){
 //check to see if the user has configured their .env file
 //TODO: change to warning only
 const envTokens = ["MATHPIX_APP_ID", "MATHPIX_APP_KEY"];
-let envCorrect = true;
+//let envCorrect = true;
 for (let token of envTokens) {
   if (!(token in process.env)) {
-    console.error(`Token ${token} missing from .env`);
-    envCorrect = false;
+    console.log(`Warning: Token ${token} missing from .env`);
+    //envCorrect = false;
   }
   else if (process.env[token].includes("INSERT")) {
-    console.error(`Token ${token} not yet defined in .env`);
-    envCorrect = false;
+    console.log(`Warning: Token ${token} not yet defined in .env`);
+    //envCorrect = false;
   }
 }
-if (!envCorrect) {process.exit(1);}
+//if (!envCorrect) {process.exit(1);}
 
 //static files use build directory first
 app.use(express.static(__dirname + "/build"));
