@@ -1,40 +1,56 @@
-.result-box{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.result-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .result-box h2 {
-    margin: 0 0 0.2rem;
-    font-size: 1rem;
-    margin-top: 0.7rem;
+  margin: 0 0 0.2rem;
+  font-size: 1rem;
+  margin-top: 0.7rem;
 }
 
-.result__wrapper{
-    border-radius: 3px;
-    background-color: #fff;
-    padding: 0.5rem 1rem;
+.result__wrapper {
+  border-radius: 3px;
+  background-color: #fff;
+  padding: 0.5rem 1rem;
 }
 
-#equation-text{
-    font-size: 1.25rem;
+.equation__wrapper {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
-#result-text{
-    font-size: 1.1rem;
+.button__set__equation {
+  padding: 6px;
+  border-radius: 3px;
+  border: 0;
+  background-color: #7593c3;
+  color: #fff;
+  cursor: pointer;
 }
 
-.button-steps, .button{
-    width: 100%;
-    padding: 5px;
-    border-radius: 3px;
-    border: 0;
-    background-color: #7593c3;
-    color: #f8f8f8;
-    font-size: 1rem;
-    cursor: pointer;
+#equation-text {
+  font-size: 1.25rem;
 }
 
-.button-steps:hover{
-    background-color: #88a2cc;
+#result-text {
+  font-size: 1.1rem;
+}
+
+.button-steps,
+.button {
+  width: 100%;
+  padding: 5px;
+  border-radius: 3px;
+  border: 0;
+  background-color: #7593c3;
+  color: #f8f8f8;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.button-steps:hover {
+  background-color: #88a2cc;
 }

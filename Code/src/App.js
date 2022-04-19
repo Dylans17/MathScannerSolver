@@ -10,6 +10,7 @@ import TypeEquation from "./components/TypeEquation/type.component.jsx";
 import Cards from "./components/Cards/cards.component.jsx";
 import CloseIcon from "./images/close-x.svg";
 import PictureTaken from "./components/Camera/PictureTaken/picture_taken.component.jsx";
+import PicsUploaded from "./components/UploadPicture/PicturesUploaded/pics_uploaded.component.jsx";
 
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
               <Route path="/camera" element={<Camera setCapturedImg={setCapturedImg}/>} />
               <Route path="/type" element={<TypeEquation />} />
               <Route path="/picture-taken" element={<PictureTaken capturedImg={capturedImg}/>}/>
+              <Route path="/uploaded-pictures" element={<PicsUploaded />} />
             </Routes>
           </main>
         </div>

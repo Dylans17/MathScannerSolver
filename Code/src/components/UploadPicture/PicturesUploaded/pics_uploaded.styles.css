@@ -1,0 +1,23 @@
+.equation__pic__uploaded {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.edit__icon {
+  cursor: pointer;
+}
+
+.thumb__container {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
+
+.thumb__wrapper {
+  width: 80%;
+}
+
+.thumb__img {
+  width: 100%;
+}

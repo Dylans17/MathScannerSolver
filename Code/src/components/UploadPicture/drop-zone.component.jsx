@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import "./drop-zone.styles.css";
 import Dropzone, { useDropzone } from "react-dropzone";
 import cloud from "../../images/cloud.svg";
@@ -7,10 +7,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import FormData from "form-data";
 import Loading from "../Loading/loading.component.jsx";
+import { resolvesToJustOneViableAlt } from "antlr4/src/antlr4/atn/PredictionMode";
 
 function UploadPicture() {
   let navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  
+  
 
   function onDrop(acceptedFiles) {
     setLoading(true);
@@ -19,8 +22,8 @@ function UploadPicture() {
     const files = acceptedFiles;
     files.forEach((file, i) => {
       formData.append(i, file);
-    });
-    //const [file] = [...acceptedFiles];
+    });    
+    
     console.log("File:", files);
     console.log("form data: ", formData);
     axios
@@ -28,7 +31,7 @@ function UploadPicture() {
       .then((response) => {
         console.log("Response inside fileupload: ", response.data);
         setLoading(false);
-        navigate("/result", { state: { data: response.data } });
+        navigate("/uploaded-pictures", { state: { data: response.data, image: acceptedFiles} });
       })
       .catch((e) => {
         setLoading(false);
