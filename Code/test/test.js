@@ -7,7 +7,21 @@ const input =3*4;
 
 describe('Equation', function(){
     it('should math it', function(){
-        assert.deepEqual(approxEvaluate(parseMath('3*4')), 12);
+        assert.deepEqual(approxEvaluate(parseMath('3*4+5')), 17);
+    });
+
+});
+
+describe('Equation', function(){
+    it('should math it', function(){
+        assert.deepEqual(approxEvaluate(parseMath('2^2')), 4);
+    });
+
+});
+
+describe('Equation', function(){
+    it('should math it', function(){
+        assert.deepEqual(approxEvaluate(parseMath('2^2/4')), 1);
     });
 
 });
