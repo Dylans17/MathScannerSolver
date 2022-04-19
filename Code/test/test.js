@@ -25,3 +25,17 @@ describe('Equation', function(){
     });
 
 });
+
+describe('Equation', function(){
+    it('should math it', function(){
+        assert.deepEqual(approxEvaluate(parseMath('2^8/4/5')), 12.8);
+    });
+
+});
+
+describe('Equation', function(){
+    it('should math it', function(){
+        assert.deepEqual(approxEvaluate(parseMath('2^2/4')), 1);
+    });
+
+});
