@@ -39,10 +39,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "mocha test/test.js"
   },
   "eslintConfig": {
     "extends": [
@@ -62,7 +59,7 @@
       "last 1 safari version"
     ]
   },
-  "scripts": {
-    "test": "mocha --recursive --exit"
+  "devDependencies": {
+    "mocha": "^9.2.2"
   }
 }
