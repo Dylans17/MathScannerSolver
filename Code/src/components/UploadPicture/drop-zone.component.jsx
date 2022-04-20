@@ -11,9 +11,7 @@ import { resolvesToJustOneViableAlt } from "antlr4/src/antlr4/atn/PredictionMode
 
 function UploadPicture() {
   let navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  
-  
+  const [loading, setLoading] = useState(false);  
 
   function onDrop(acceptedFiles) {
     setLoading(true);

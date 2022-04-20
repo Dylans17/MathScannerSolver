@@ -43,10 +43,6 @@ function PicsUploaded() {
       });
   }
 
-  // const handleSubmit = () => {
-  //   navigate("/result", { state: { data: location.state.data } });
-  // };
-
   const createDataArray = () => {
     const dataArray = [];
     for (let i = 0; i < files.length; i++) {
