@@ -1,41 +1,19 @@
 "use strict";
 import dotenv from 'dotenv';
 import express from 'express';
-import { fileURLToPath } from 'url'
-import { dirname } from 'path'
+import formidable from "express-formidable";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import {approxEvaluate} from "./solver.js";
-import cors from 'cors';
-import parseMath from "./LatexMathParser/index.js"
+import parseMath from "./LatexMathParser/index.js";
 import mathpix from './mathpix.js';
+import fs from "fs/promises";
+import cors from "cors";
 
 const app = express();
 dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
-
-
-// TODO: I'm probably going to at least change the location of these, if not the implementation
-function getBase64(file, cb) {
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function() {
-        cb(reader.result);
-    }
-    reader.onerror = function(error){
-        console.log("error:", error)
-    }
-}
-
-function fileUpload(file){
-    try {
-        getBase64(file, (base64string) => {
-            console.log(base64string)
-        })
-    } catch(e) {
-        console.log(e.message)
-    }
-}
 
 
 //check to see if the user has configured their .env file
@@ -57,19 +35,51 @@ for (let token of envTokens) {
 //static files use build directory first
 app.use(express.static(__dirname + "/build"));
 
-//the user can request us to parse and solve an equation /equation
-app.get("/equation", (req, res) => {
-  console.log(req.query);
-  let response = {};
+app.use(express.json());
+
+app.use(cors());
+
+app.post("/equations", (req, res, next) => {
+  const data = req.body.equations;
+  let dataRes = {equations: [], results: []};
   try {
-    let equation = req.query.equation;
-    let node = parseMath(equation);
-    let result = approxEvaluate(node);
-    response = {result: result};
+    for (let i = 0; i < data.length; i++) {
+      let node = parseMath(data[i]);
+      let result = approxEvaluate(node);
+      dataRes.equations.push(data[i]);
+      dataRes.results.push(result)
+    }
+    res.send(dataRes);
   } catch (e) {
-    console.log("We got an error!");
-    console.log(e);
-    response = {error: e};
+    console.log("oops");
+    let err = new Error(e);
+    err.statusCode = 500;
+    next(err);
+  }
+});
+
+//add req.files and req.fields for forms
+app.use(formidable());
+
+app.post('/input-picture', async (req,res) => {
+  //just a temporary setup. I'd be happy to send the output however the frontend needs like.
+  //It's going to change no matter what for solving multiple equations.
+  let response = {equations: [], results: []};
+  for (let upload in req.files) {
+    let file = await fs.readFile(req.files[upload].path);
+    let equations = await mathpix(file);
+    response.equations.push(...equations);
+    for (let equation of equations) {
+      let result;
+      try {
+        let root = parseMath(equation);
+        result = approxEvaluate(root);
+      } catch (e) {
+        result = e;
+      } finally {
+        response.results.push(result);
+      }
+    }
   }
   res.json(response);
 })
@@ -80,50 +90,11 @@ app.get("/*", (req, res) => {
   res.sendFile(__dirname + "/build/index.html");
 });
 
-app.use(express.json());
-
-app.use(cors());
-
-app.post("/equation", (req,res, next) => {
-    let newData;
-    try {
-        let node = parseMath(req.body.equation);
-        let result = approxEvaluate(node);
-        newData =  {
-            equation: req.body.equation,
-            result: result
-        }
-        res.json(newData);
-    } catch (e) {
-        console.log("oops");
-        let err = new Error(e);
-        err.statusCode = 500;
-        next(err);
-    }
-
-})
-
-app.use(function(err, req, res, next) {
-    console.error(err.message);
-    if (!err.statusCode) err.statusCode = 500; // If err has no specified error code, set error code to 'Internal Server Error (500)'
-    res.status(err.statusCode).json(err.message);
- });
-
-// app.post('/input-picture', (req,res) => {
-
-//     let imageBuffer = fileUpload(req.body.picture);
-//     let equationFromMathPix = makeRequest(imageBuffer, "whatever")
-//     let node = parseMath(equationFromMathPix);
-//     let result = approxEvaluate(node);
-
-//     const newData = {
-//         equation: equationFromMathPix,
-//         result: result
-//     }
-
-//     console.log(equationFromMathPix);
-//     res.json(newData)
-// })
+app.use(function (err, req, res, next) {
+  console.error(err.message);
+  if (!err.statusCode) err.statusCode = 500; // If err has no specified error code, set error code to 'Internal Server Error (500)'
+  res.status(err.statusCode).json(err.message);
+});
 
 app.listen(9000);
 console.log("App listening on port 9000.");

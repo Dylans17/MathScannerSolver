@@ -1,28 +1,42 @@
-import React from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import "./drop-zone.styles.css";
-import Dropzone from "react-dropzone";
-import cloud from '../../images/cloud.svg';
-import uploaded from '../../images/uploaded.svg';
-import { useNavigate  } from "react-router-dom";
-import axios from 'axios';
+import Dropzone, { useDropzone } from "react-dropzone";
+import cloud from "../../images/cloud.svg";
+import uploaded from "../../images/uploaded.svg";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import FormData from "form-data";
+import Loading from "../Loading/loading.component.jsx";
+import { resolvesToJustOneViableAlt } from "antlr4/src/antlr4/atn/PredictionMode";
 
 function UploadPicture() {
   let navigate = useNavigate();
-  let result = 0;
-  let equation = 0;
-  
-  async function onAcceptedDrop(acceptedFile) {
-    console.log(acceptedFile[0]);
+  const [loading, setLoading] = useState(false);  
+
+  function onDrop(acceptedFiles) {
+    setLoading(true);
+    console.log("Accepted files: ", acceptedFiles);
+    const formData = new FormData();
+    const files = acceptedFiles;
+    files.forEach((file, i) => {
+      formData.append(i, file);
+    });    
+    
+    console.log("File:", files);
+    console.log("form data: ", formData);
     axios
-      .post("/input-picture", { picture: acceptedFile[0] })
+      .post("/input-picture", formData)
       .then((response) => {
-        console.log(response);
-        result= response.data.result;
-        equation= response.data.equation;     
-        navigate("/result", {state: {result: result, equation: equation}}) 
+        console.log("Response inside fileupload: ", response.data);
+        setLoading(false);
+        navigate("/uploaded-pictures", { state: { data: response.data, image: acceptedFiles} });
       })
-      .catch(console.log("error posting"));
+      .catch((e) => {
+        setLoading(false);
+        console.log(e.response.data);
+      });
   }
+
   return (
     <div className="dropzone-section">
       <Dropzone
@@ -30,26 +44,25 @@ function UploadPicture() {
         maxSize={5000000}
         noKeyboard={true}
         accept="image/png, image/jpeg, image/pdf, image/tiff, image/webp"
-        onDrop={(file) => {
-          console.log(file);
-        }}
-        onDropAccepted={onAcceptedDrop}
+        //onDrop={onDrop}
+        onDropAccepted={onDrop}
       >
         {({ getRootProps, getInputProps, isDragActive, isDragReject }) => (
           <section>
-          <div {...getRootProps()}>
-            <input {...getInputProps()} />
-            <div className="box-input-image">
-              {!isDragActive && <img alt="cloud" src={cloud} />}
-              {isDragActive && !isDragReject && (
-                <img alt="uploaded" src={uploaded} />
-              )}
-              <p>Drag 'n' drop here, or click to select a file</p>
+            <div {...getRootProps()}>
+              <input {...getInputProps()} />
+              <div className="box-input-image">
+                {!isDragActive && <img alt="cloud" src={cloud} />}
+                {isDragActive && !isDragReject && (
+                  <img alt="uploaded" src={uploaded} />
+                )}
+                <p>Drag 'n' drop here, or click to select a file</p>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
         )}
       </Dropzone>
+      {loading ? <Loading /> : ""}
     </div>
   );
 }
