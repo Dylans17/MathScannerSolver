@@ -5,7 +5,7 @@ import dotenv from "dotenv"
 import mathpix, {makeRequest} from "./mathpix.js";
 import imageHash from "./image-hash.js";
 import readline from "readline";
-import {approxEvaluate} from "./solver.js";
+import solver from "./solver.js";
 
 //setup
 dotenv.config()
@@ -22,7 +22,7 @@ const driverFunctions = {
   },
   "equation-solve": function (line) {
     let node = parseMath(line);
-    let result = approxEvaluate(node);
+    let [result] = solver(node);
     console.log(result);
   },
   "mathpix-plain-result": async function (line) {
@@ -38,11 +38,11 @@ const driverFunctions = {
   "solve-image": async function (line) {
     let img = await fs.readFile(line);
     let equationList = await mathpix(img);
-    for (let equation of equationList) {
-      console.log(equation);
-      let node = parseMath(equation);
-      let result = approxEvaluate(node);
-      console.log(result);
+    let nodes = equationList.map(parseMath);
+    let results = solver(...equationList);
+    for (let i=0; i<result.length; i++) {
+      console.log(equationList[i]);
+      console.log(results[i]);
     }
   },
   "image-hash": async function (line) {
