@@ -1,6 +1,35 @@
 "use strict";
 
 
+export default function evalAll(...roots) {
+  let results = roots.map((root) => {
+    if (root instanceof Error) {
+      return root;
+    }
+    try {
+      return approxEvaluate(root);
+    } catch (e) {
+      return e;
+    }
+  });
+  return results;
+  // let numRoots = roots.length;
+  // future code for handling definitions/equations
+  // let isEquation = new Array(numRoots).fill(0);
+  // for index in roots {
+  //   let root = roots[index];
+  //   if (root)
+  //   if (root.type == "operator" && root.value == "=") {
+  //     isEquation[index] |= 1;
+  //   }
+  // }
+  //handle equations first to fill symTab
+  // let equations = roots.filter((_, index) => isEquation[index]);
+  // while (true) {
+  //
+  //
+}
+
 const approxEvaluateFunctions = {
   operatorFunctions: {
     "=" : function(node, symTab) {
@@ -72,7 +101,7 @@ const approxEvaluateFunctions = {
   "id function" : function(node, symTab) {
     // TODO:
     if (false && node.value in symTab /*&& value is function*/) {
-      return that.evauluate;
+      return that.evaluate;
     }
     else if (false && node.value in symTab /*&& value is known*/) {
       return that.value;
