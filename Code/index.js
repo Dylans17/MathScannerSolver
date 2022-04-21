@@ -48,7 +48,12 @@ function handleEquationResponse(equations, req, res) {
       }
     });
     //currently returning {equations: [], results: []} as used in frontend
-    let result = {equations, results: solver(...equationRoots)};
+    let errorFormattedEquations = equations.map((e) => {
+      if (!(e instanceof Error)) {return e;}
+      if (e.source) {return e.source;}
+      return "Unknown Source";
+    })
+    let result = {equations: errorFormattedEquations, results: solver(...equationRoots)};
     res.json(result);
   }
 
@@ -70,7 +75,9 @@ app.post('/input-picture', async (req,res) => {
     catch (e) {
       console.log(`Image Reading error:`);
       console.log(e);
-      inputs.push(new Error(e));
+      let err = new Error(e);
+      err.source = filename;
+      inputs.push(err);
     }
   }
   handleEquationResponse(inputs, req, res);

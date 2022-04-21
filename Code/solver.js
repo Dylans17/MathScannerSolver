@@ -4,7 +4,7 @@
 export default function evalAll(...roots) {
   let results = roots.map((root) => {
     if (root instanceof Error) {
-      return root;
+      return root.message;
     }
     try {
       return approxEvaluate(root);
