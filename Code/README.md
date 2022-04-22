@@ -13,7 +13,7 @@ cd MathScannerSolver/Code
 
 ```bash
 npm install
-npm build
+npm run build
 ```
 
 3. Edit the provided .env file and fill in the required values
