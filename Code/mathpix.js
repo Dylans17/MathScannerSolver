@@ -58,7 +58,7 @@ export async function makeRequest(imageBuffer, imageName, verboseLogging=true) {
        // Increased max size from 10 MB to 2 GB
        maxContentLength: 2**31,
        maxBodyLength: 2**31,
-       headers: {...form.getHeaders(), app_id: 'team_eight2022_gmail_com_bdf47a_0b1f42', app_key: '6a3be6f1659243ef6c873b6368c768fefae1d7e6ada86db12d11a10b48091763'}
+       headers: {...form.getHeaders(), app_id: process.env.MATHPIX_APP_ID, app_key: process.env.MATHPIX_APP_KEY}
      });
   imageStorage.setItem(hash, JSON.stringify(response.data));
   return response.data;
