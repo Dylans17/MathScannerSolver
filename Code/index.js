@@ -15,20 +15,16 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// //check to see if the user has configured their .env file
-// const envTokens = ["MATHPIX_APP_ID", "MATHPIX_APP_KEY"];
-// let envCorrect = true;
-// for (let token of envTokens) {
-//   if (!(token in process.env)) {
-//     console.error(`Token ${token} missing from .env`);
-//     envCorrect = false;
-//   }
-//   else if (process.env[token].includes("INSERT")) {
-//     console.error(`Token ${token} not yet defined in .env`);
-//     envCorrect = false;
-//   }
-// }
-// if (!envCorrect) {process.exit(1);}
+//check to see if the user has configured their .env file
+const envTokens = ["MATHPIX_APP_ID", "MATHPIX_APP_KEY"];
+for (let token of envTokens) {
+  if (!(token in process.env)) {
+    console.log(`Warning: Token ${token} missing from .env`);
+  }
+  else if (process.env[token].includes("INSERT")) {
+    console.log(`Warning: Token ${token} not yet defined in .env`);
+  }
+}
 
 app.use(express.static(__dirname + "/build"));
 
