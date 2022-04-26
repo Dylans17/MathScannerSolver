@@ -117,7 +117,7 @@ function PicsUploaded() {
           </>
         );
       })}
-      <button onClick={() => post()}>Submit</button>
+      <button className="submit__uploaded_pictures button" onClick={() => post()}>Submit</button>
     </div>
   );
 }
