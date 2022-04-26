@@ -1,14 +1,28 @@
 .camera-section{
     position: relative;
 }
-.camera__button{
+
+.camera_icons{
     position: absolute;
+    display: flex;
     bottom: 5%;
-    right: calc(50% - 15px);
+    width: 100%;
+    justify-content: center;
+    gap: 5rem;
+}
+.filler_camera{
+    width: 20px;
+    height: 20px;
+}
+.camera__button{        
     border-radius: 50%;
     border: 0;
     width: 30px;
     height: 30px;
+}
+
+.switch_camera{
+    cursor: pointer;
 }
 
 .camera__button:hover{
