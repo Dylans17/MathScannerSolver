@@ -1,13 +1,12 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState } from "react";
 import "./drop-zone.styles.css";
-import Dropzone, { useDropzone } from "react-dropzone";
+import Dropzone from "react-dropzone";
 import cloud from "../../images/cloud.svg";
 import uploaded from "../../images/uploaded.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import FormData from "form-data";
 import Loading from "../Loading/loading.component.jsx";
-import { resolvesToJustOneViableAlt } from "antlr4/src/antlr4/atn/PredictionMode";
 
 function UploadPicture() {
   let navigate = useNavigate();
