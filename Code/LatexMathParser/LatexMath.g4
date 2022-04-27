@@ -8,7 +8,9 @@ OPERATORS: '+' | '-' | '/' | '*' | '=' | '^' | '!' | '_' ;
 BRACKETS: '{' | '}' | '[' | ']' ;
 LEFTPARENTHESIS: '\\left(' | '(' ;
 RIGHTPARENTHESIS: '\\right)' | ')' ;
-TEXFUNCTION: '\\sin' | '\\cos' | '\\tan' | '\\csc' | '\\cot' | '\\sec' | '\\prod' | '\\sum' | '\\int' ;
+TEXFUNCTION: '\\sin' | '\\cos' | '\\tan' | '\\csc' | '\\cot' | '\\sec' | '\\prod' | '\\sum' | '\\int'
+            | '\\arcsin' | '\\arctan' | '\\arccsc' | '\\arccot' | '\\arccos' | '\\arcsec'
+            | '\\operatorname{arcsec}' | '\\operatorname{arccot}'| '\\operatorname{arccsc}';
 TEXCOMMAND: '\\' CHAR+ ;
 CHAR : [a-zA-Z] ;
 
