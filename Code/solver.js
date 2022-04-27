@@ -1,5 +1,10 @@
 "use strict";
 
+const defaultSymTab = new Map([
+  ["\\pi", Math.PI],
+  ["\\tau", 2*Math.PI],
+  ["e", Math.E],
+]);
 
 export default function evalAll(...roots) {
   let results = roots.map((root) => {
@@ -7,7 +12,7 @@ export default function evalAll(...roots) {
       return root.message;
     }
     try {
-      return approxEvaluate(root);
+      return approxEvaluate(root, defaultSymTab);
     } catch (e) {
       return e;
     }
@@ -92,21 +97,22 @@ const approxEvaluateFunctions = {
     throw node.type + "command not implemented";
   },
   "id" : function(node, symTab) {
-    // TODO:
-    if (false && node.value in symTab /*&& value is known*/) {
-      return that.value;
+    const identifier = node.value;
+    if (symTab.has(identifier)) {
+      return symTab.get(identifier);
     }
     throw "Unknown Variable " + node.value + " in expression!";
   },
   "id function" : function(node, symTab) {
-    // TODO:
-    if (false && node.value in symTab /*&& value is function*/) {
-      return that.evaluate;
-    }
-    else if (false && node.value in symTab /*&& value is known*/) {
-      return that.value;
-    }
-    throw "Unknown Variable " + node.value + " in expression!";
+    return approxEvaluateFunctions["id"](node, symTab);
+    // // TODO:
+    // if (false && node.value in symTab /*&& value is function*/) {
+    //   return that.evaluate;
+    // }
+    // else if (false && node.value in symTab /*&& value is known*/) {
+    //   return that.value;
+    // }
+    // throw "Unknown Variable " + node.value + " in expression!";
   },
   functionMethods : {
     genericFunction: function(node, symTab, func, powFunc=Math.pow) {
