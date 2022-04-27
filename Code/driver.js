@@ -40,7 +40,7 @@ const driverFunctions = {
     let equationList = await mathpix(img);
     let nodes = equationList.map(parseMath);
     let results = solver(...equationList);
-    for (let i=0; i<result.length; i++) {
+    for (let i=0; i<results.length; i++) {
       console.log(equationList[i]);
       console.log(results[i]);
     }
