@@ -119,7 +119,7 @@ const approxEvaluateFunctions = {
       if (node.sub != null) {
         throw " cannot have a subscript! " + node.sub;
       }
-      let innerValue = func(approxEvaluate(node.children[0]));
+      let innerValue = func(approxEvaluate(node.children[0], symTab));
       if (node.sup != undefined) {
         return powFunc(innerValue, approxEvaluate(node.sup, symTab));
       }
