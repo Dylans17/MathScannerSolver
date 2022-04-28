@@ -31,10 +31,20 @@ function PicsUploaded() {
     );
   }, [location.state.image]);
 
-  function post() {
+  function isEquationEmpty(equations) {
+    if(equations === "" || equations.length === 0) {
+      return ["file"];
+    }
+    else {
+      return equations;
+    }
+  }
+
+
+  function post() {    
     axios
-      .post("/equations", { equations: equations })
-      .then((response) => {
+      .post("/equations", { equations: isEquationEmpty(equations) })
+      .then((response) => {        
         console.log("Response: ",  response.data)
         navigate("/result", { state: { data: response.data } });
       })
@@ -61,6 +71,14 @@ function PicsUploaded() {
     setEquations(list);
     console.log("Equations: ", equations)
   };
+
+  function isEmptyOrFile(data){
+    if(data === "" || data === "file" || data === " ") {
+      return 'Content Not Found'
+    } else {
+      return data
+    }
+  }
 
   return (
     <div className="uploaded-pictures__container">
@@ -93,7 +111,7 @@ function PicsUploaded() {
                   <StaticMathField
                     id="equation-text"                    
                   >
-                    {data.equation}
+                    {isEmptyOrFile(data.equation)}
                   </StaticMathField>
                   <img
                     src={editIcon}

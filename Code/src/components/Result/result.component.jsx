@@ -24,6 +24,23 @@ function Result() {
     return resultArray;
   }
 
+  function isError(result) {
+    if(typeof result === 'string' || result instanceof String){
+      return "result-text-error"
+    } else {
+      return "result-text"
+    }
+  }
+
+  function isFile(data) {
+    if (data.equation === 'file' || data.equation === "") {
+      return "Content Not Found"
+    } else {
+      return data.result
+    }
+  }
+  
+
   return (
     <section className="result-box">
       {createResultsArray().map((data, i) => {
@@ -35,7 +52,7 @@ function Result() {
               </StaticMathField>
             </div>
             <h2>Result: </h2>
-            <p id="result-text">{data.result}</p>
+            <p id={isError(data.result)}>{isFile(data)}</p>
           </div>
         );
       })}
