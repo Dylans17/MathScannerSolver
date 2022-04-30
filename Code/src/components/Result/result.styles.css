@@ -39,6 +39,11 @@
   font-size: 1.1rem;
 }
 
+#result-text-error {
+  font-size: 1.1rem;
+  color: red;
+}
+
 .button-steps,
 .button {
   width: 100%;
