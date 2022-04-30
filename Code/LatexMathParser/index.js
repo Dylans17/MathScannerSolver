@@ -22,6 +22,9 @@ export default function parseMath(str) {
 
 class CustomErrorListener extends antlr4.error.ErrorListener {
   syntaxError(recognizer, offendingSymbol, line, column, msg, e) {
-    throw "Unknown symbol " + offendingSymbol.text;
+    if (offendingSymbol.text == "}") {
+      throw "Unexpected symbol }. Possibly missing an argument";
+    }
+    throw "Unexpected symbol " + offendingSymbol.text;
   }
 }
