@@ -42,7 +42,7 @@ function handleEquationResponse(equations, req, res) {
         return parseMath(str);
       }
       catch (e) {
-        console.log(`String parsing error on ${str}:`);
+        console.log(`String parsing error on "${str}":`);
         console.log(e);
         return new Error(e);
       }
