@@ -6,7 +6,7 @@ import LatexMathVisitor from './LatexMathVisitor.js';
 
 
 const serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786",
-    "\u5964\u0003\u001d\u00b7\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004",
+    "\u5964\u0003\u001e\u00b7\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004",
     "\u0004\t\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t",
     "\u0007\u0004\b\t\b\u0004\t\t\t\u0004\n\t\n\u0004\u000b\t\u000b\u0004",
     "\f\t\f\u0004\r\t\r\u0004\u000e\t\u000e\u0004\u000f\t\u000f\u0004\u0010",
@@ -136,7 +136,7 @@ export default class LatexMathParser extends antlr4.Parser {
                              null, null, null, null, null, null, null, null, 
                              null, null, null, "DIGIT", "OPERATORS", "BRACKETS", 
                              "LEFTPARENTHESIS", "RIGHTPARENTHESIS", "TEXFUNCTION", 
-                             "TEXCOMMAND", "CHAR", "WHITESPACE" ];
+                             "TEXCOMMAND", "CHAR", "WHITESPACE", "ERROR" ];
     static ruleNames = [ "start", "equation", "expr", "functionExpression", 
                          "factorialExpression", "exponentialExpression", 
                          "signExpression", "multiplicativeExpression", "additiveExpression", 
@@ -956,6 +956,7 @@ LatexMathParser.TEXFUNCTION = 24;
 LatexMathParser.TEXCOMMAND = 25;
 LatexMathParser.CHAR = 26;
 LatexMathParser.WHITESPACE = 27;
+LatexMathParser.ERROR = 28;
 
 LatexMathParser.RULE_start = 0;
 LatexMathParser.RULE_equation = 1;

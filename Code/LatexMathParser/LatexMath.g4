@@ -19,6 +19,10 @@ CHAR : [a-zA-Z] ;
  *----------------------*/
 WHITESPACE : [ \t\r\n]+ -> skip ;
 
+
+// pass the errors from the lexer to the parser so we can catch them
+ERROR : . ;
+
 /*----------------------
  * Parser Rules
  *----------------------*/
