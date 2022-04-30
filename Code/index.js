@@ -14,6 +14,7 @@ const app = express();
 dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const port = process.env.APP_PORT || 9000;
 
 
 //check to see if the user has configured their .env file
@@ -89,5 +90,5 @@ app.get("/*", (req, res) => {
   res.sendFile(__dirname + "/build/index.html");
 });
 
-app.listen(9000);
-console.log("App listening on port 9000.");
+app.listen(port);
+console.log(`App listening on port ${port}.`);
