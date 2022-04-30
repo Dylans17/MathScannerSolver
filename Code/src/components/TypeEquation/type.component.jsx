@@ -9,16 +9,14 @@ function TypeEquation() {
   let navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
   const initialEquation = [
-    {
-      equation: "",
-    },
+    ""
   ];
 
   const [equations, setEquations] = useState(initialEquation);
 
   function post() {
     axios
-      .post("/equations", { equations: equations })
+      .post("/equations", { equations })
       .then((response) => {
         console.log("Response: ",  response.data)
         navigate("/result", { state: { data: response.data } });
@@ -30,7 +28,7 @@ function TypeEquation() {
   useEffect(() => {}, [errorMessage]);
 
   const handleAddInput = () => {
-    setEquations([...equations, { equation: "" }]);
+    setEquations([...equations, ""]);
   };
 
   const handleChange = (index, mathField) => {
