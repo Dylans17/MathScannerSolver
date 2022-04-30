@@ -148,7 +148,7 @@ export default class AstBuilderVisitor extends LatexMathVisitor {
         continue;
       }
       if (nextTarget == denominator && child.type.includes(func)) {
-        child.inDenominator == true;
+        child.ambiguousDenominator = true;
       }
       nextTarget.push(child);
       nextTarget = numerator;

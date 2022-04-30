@@ -104,15 +104,12 @@ const approxEvaluateFunctions = {
     throw "Unknown Variable " + node.value + " in expression!";
   },
   "id function" : function(node, symTab) {
-    return approxEvaluateFunctions["id"](node, symTab);
-    // // TODO:
-    // if (false && node.value in symTab /*&& value is function*/) {
-    //   return that.evaluate;
-    // }
-    // else if (false && node.value in symTab /*&& value is known*/) {
-    //   return that.value;
-    // }
-    // throw "Unknown Variable " + node.value + " in expression!";
+    const nodeValue = approxEvaluateFunctions["id"](node, symTab);
+    const childValue = approxEvaluate(node.children[0], symTab)
+    if (node.ambiguousDenominator) {
+      return nodeValue / childValue;
+    }
+    return nodeValue * childValue;
   },
   functionMethods : {
     genericFunction: function(node, symTab, func, powFunc=Math.pow) {
