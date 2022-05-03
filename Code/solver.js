@@ -1,5 +1,39 @@
+"use strict";
 
+const defaultSymTab = new Map([
+  ["\\pi", Math.PI],
+  ["\\tau", 2*Math.PI],
+  ["e", Math.E],
+]);
 
+export default function evalAll(...roots) {
+  let results = roots.map((root) => {
+    if (root instanceof Error) {
+      return root.message;
+    }
+    try {
+      return approxEvaluate(root, defaultSymTab);
+    } catch (e) {
+      return e;
+    }
+  });
+  return results;
+  // let numRoots = roots.length;
+  // future code for handling definitions/equations
+  // let isEquation = new Array(numRoots).fill(0);
+  // for index in roots {
+  //   let root = roots[index];
+  //   if (root)
+  //   if (root.type == "operator" && root.value == "=") {
+  //     isEquation[index] |= 1;
+  //   }
+  // }
+  //handle equations first to fill symTab
+  // let equations = roots.filter((_, index) => isEquation[index]);
+  // while (true) {
+  //
+  //
+}
 
 const approxEvaluateFunctions = {
   operatorFunctions: {
@@ -63,50 +97,96 @@ const approxEvaluateFunctions = {
     throw node.type + "command not implemented";
   },
   "id" : function(node, symTab) {
-    // TODO:
-    if (false && node.value in symTab /*&& value is known*/) {
-      return that.value;
+    const identifier = node.value;
+    if (symTab.has(identifier)) {
+      return symTab.get(identifier);
     }
     throw "Unknown Variable " + node.value + " in expression!";
   },
   "id function" : function(node, symTab) {
-    // TODO:
-    if (false && node.value in symTab /*&& value is function*/) {
-      return that.evauluate;
+    const nodeValue = approxEvaluateFunctions["id"](node, symTab);
+    const childValue = approxEvaluate(node.children[0], symTab)
+    if (node.ambiguousDenominator) {
+      return nodeValue / childValue;
     }
-    else if (false && node.value in symTab /*&& value is known*/) {
-      return that.value;
-    }
-    throw "Unknown Variable " + node.value + " in expression!";
+    return nodeValue * childValue;
   },
   functionMethods : {
     genericFunction: function(node, symTab, func, powFunc=Math.pow) {
       if (node.sub != null) {
         throw " cannot have a subscript! " + node.sub;
       }
-      let innerValue = func(approxEvaluate(node.children[0]));
+      let innerValue = func(approxEvaluate(node.children[0], symTab));
       if (node.sup != undefined) {
         return powFunc(innerValue, approxEvaluate(node.sup, symTab));
       }
       return innerValue;
     },
     "sin" : function(node, symTab) {
+      let power;
+      if (node.sup && (power = approxEvaluate(node.sup, symTab)) == -1) {
+        node.sup = undefined;
+        return approxEvaluateFunctions.functionMethods["arcsin"](node, symTab);
+      }
       return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, Math.sin);
     },
     "cos" : function(node, symTab) {
+      let power;
+      if (node.sup && (power = approxEvaluate(node.sup, symTab)) == -1) {
+        node.sup = undefined;
+        return approxEvaluateFunctions.functionMethods["arccos"](node, symTab);
+      }
       return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, Math.cos);
     },
     "tan" : function(node, symTab) {
+      let power;
+      if (node.sup && (power = approxEvaluate(node.sup, symTab)) == -1) {
+        node.sup = undefined;
+        return approxEvaluateFunctions.functionMethods["arctan"](node, symTab);
+      }
       return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, Math.tan);
     },
     "cosec" : function(node, symTab) {
+      let power;
+      if (node.sup && (power = approxEvaluate(node.sup, symTab)) == -1) {
+        node.sup = undefined;
+        return approxEvaluateFunctions.functionMethods["arccsc"](node, symTab);
+      }
       return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, (v)=>1/Math.sin(v));
     },
     "cotan" : function(node, symTab) {
+      let power;
+      if (node.sup && (power = approxEvaluate(node.sup, symTab)) == -1) {
+        node.sup = undefined;
+        return approxEvaluateFunctions.functionMethods["arccot"](node, symTab);
+      }
       return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, (v)=>1/Math.tan(v));
     },
     "sec" : function(node, symTab) {
+      let power;
+      if (node.sup && (power = approxEvaluate(node.sup, symTab)) == -1) {
+        node.sup = undefined;
+        return approxEvaluateFunctions.functionMethods["arcsec"](node, symTab);
+      }
       return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, (v)=>1/Math.cos(v));
+    },
+	  "arcsin" : function(node, symTab) {
+      return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, Math.asin);
+    },
+    "arccos" : function(node, symTab) {
+      return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, Math.acos);
+    },
+    "arctan" : function(node, symTab) {
+      return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, Math.atan);
+    },
+    "arccsc" : function(node, symTab) {
+      return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, (v)=>Math.asin(1/v));
+    },
+    "arccot" : function(node, symTab) {
+      return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, (v)=>Math.PI/2 - Math.atan(v));
+    },
+    "arcsec" : function(node, symTab) {
+      return approxEvaluateFunctions.functionMethods.genericFunction(node, symTab, (v)=>Math.acos(1/v));
     },
     "product" : function(node, symTab) {
       throw "Product Not Implemented"

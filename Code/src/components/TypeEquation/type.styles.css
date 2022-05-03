@@ -22,29 +22,50 @@
     gap: 10px;
 }
 
+.buttons__type__wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    gap: 1rem;
+}
+
+.button__remove__input {
+    background-color: rgb(117, 147, 195);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    border-radius: 50%;
+}
+
+.add-another-equation {
+    background-color: rgb(55, 86, 136);
+    font-size: 12px;
+    width: 50%;
+}
+
 .type-title{
     text-align: center;
 }
 
+.inputs__wrapper {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.error__message{
+    color: red;
+    font-size: 12px;
+}
 
 .submit-type-equation{
-    width: 150px;
+    width: 50%;
     padding: 5px 10px;
-}
-
-.examples-type-section{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.title-examples{
-    font-weight: 600;
-}
-
-.examples-equations{
-    margin-top: 10px;
-    padding: 5px;
-    background-color: rgba(255, 255, 255, 0.575);
-    border-radius: 3px;
 }

@@ -8,7 +8,9 @@ OPERATORS: '+' | '-' | '/' | '*' | '=' | '^' | '!' | '_' ;
 BRACKETS: '{' | '}' | '[' | ']' ;
 LEFTPARENTHESIS: '\\left(' | '(' ;
 RIGHTPARENTHESIS: '\\right)' | ')' ;
-TEXFUNCTION: '\\sin' | '\\cos' | '\\tan' | '\\csc' | '\\cot' | '\\sec' | '\\prod' | '\\sum' | '\\int' ;
+TEXFUNCTION: '\\sin' | '\\cos' | '\\tan' | '\\csc' | '\\cot' | '\\sec' | '\\prod' | '\\sum' | '\\int'
+            | '\\arcsin' | '\\arctan' | '\\arccsc' | '\\arccot' | '\\arccos' | '\\arcsec'
+            | '\\operatorname{arcsec}' | '\\operatorname{arccot}'| '\\operatorname{arccsc}';
 TEXCOMMAND: '\\' CHAR+ ;
 CHAR : [a-zA-Z] ;
 
@@ -16,6 +18,10 @@ CHAR : [a-zA-Z] ;
  * Things to Skip
  *----------------------*/
 WHITESPACE : [ \t\r\n]+ -> skip ;
+
+
+// pass the errors from the lexer to the parser so we can catch them
+ERROR : . ;
 
 /*----------------------
  * Parser Rules

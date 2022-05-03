@@ -1,3 +1,4 @@
+"use strict";
 import antlr4 from "antlr4";
 import LatexMathVisitor from "./antlr/LatexMathVisitor.js"
 import LatexMathParser from "./antlr/LatexMathParser.js"
@@ -43,7 +44,16 @@ const alwaysFunctions = {
   "\\sec": "sec",
   "\\prod": "product",
   "\\sum": "sum",
-  "\\int": "integral"
+  "\\int": "integral",
+  "\\arcsin": "arcsin",
+  "\\arctan": "arctan",
+  "\\arccos": "arccos",
+  "\\arcsec": "arcsec",
+  "\\arccsc": "arccsc",
+  "\\arccot": "arccot",
+  "\\operatorname{arcsec}": "arcsec",
+  "\\operatorname{arccot}": "arccot",
+  "\\operatorname{arccsc}": "arccsc"
 };
 
 export default class AstBuilderVisitor extends LatexMathVisitor {
@@ -138,7 +148,7 @@ export default class AstBuilderVisitor extends LatexMathVisitor {
         continue;
       }
       if (nextTarget == denominator && child.type.includes(func)) {
-        child.inDenominator == true;
+        child.ambiguousDenominator = true;
       }
       nextTarget.push(child);
       nextTarget = numerator;
