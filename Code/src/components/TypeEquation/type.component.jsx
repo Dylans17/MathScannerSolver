@@ -5,20 +5,18 @@ import { addStyles, EditableMathField } from "react-mathquill";
 import axios from "axios";
 addStyles();
 
+
+let equationId = 1;
 function TypeEquation() {
   let navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
-  const initialEquation = [
-    {
-      equation: "",
-    },
+  const initialEquationState = [
+    {equation: "", id: 0}
   ];
-
-  const [equations, setEquations] = useState(initialEquation);
-
+  const [equations, setEquations] = useState(initialEquationState);
   function post() {
     axios
-      .post("/equations", { equations: equations })
+      .post("/equations", { equations: equations.map(data => data.equation) })
       .then((response) => {
         console.log("Response: ",  response.data)
         navigate("/result", { state: { data: response.data } });
@@ -30,13 +28,13 @@ function TypeEquation() {
   useEffect(() => {}, [errorMessage]);
 
   const handleAddInput = () => {
-    setEquations([...equations, { equation: "" }]);
+    setEquations([...equations, {equation: "", id: equationId++}]);
   };
 
   const handleChange = (index, mathField) => {
     const value = mathField.latex();
     const list = [...equations];
-    list[index] = value;
+    list[index].equation = value;
     setEquations(list);
   };
 
@@ -52,7 +50,7 @@ function TypeEquation() {
         <h3 className="type-title"> Type your equation below </h3>
         {equations.map((data, i) => {
           return (
-            <div className="inputs__wrapper" key={i}>
+            <div className="inputs__wrapper" key={data.id}>
               <EditableMathField
                 className="editor"
                 style={{
@@ -65,7 +63,7 @@ function TypeEquation() {
               {equations.length !== 1 ? (
                 <button
                   className="button__remove__input"
-                  onClick={handleRemoveInput}
+                  onClick={() => handleRemoveInput(i)}
                 >
                   {" "}
                   x{" "}
